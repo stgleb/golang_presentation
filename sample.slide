@@ -1,0 +1,38 @@
+Golang from python point of view
+Tags: go, python
+
+Gleb Stepanov
+Software engineer, Mirantis
+gstepanov@mirantis.com
+
+Thank you!
+
+* Title of slide or section (must have asterisk)
+
+- bullets
+- more bullets
+- a bullet with
+
+* One more slide
+
+Further Text, including invocations like:
+
+.image images/gopher.png 150 100
+.link http://golang.org link
+.caption _Gopher_ by [[http://www.reneefrench.com][Renée French]]
+
+* Slide with highlighted text
+
+// HL Highlited text goes here
+
+* Slide with code
+
+.code src/hello_world.go
+
+* Slide with more code and line numbers
+
+.code -numbers src/driver.go /START OMIT/,/END OMIT/
+
+* Q&A
+
+Questions?
