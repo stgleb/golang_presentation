@@ -39,6 +39,10 @@ Thank you!
 - mips64
 - mips64le
 
+* Rule of thumb for Go
+
+ Accept interfaces, return structs
+
 * One more slide
 
 Further Text, including invocations like:
