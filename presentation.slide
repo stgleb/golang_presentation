@@ -1,0 +1,64 @@
+Golang from python point of view
+Tags: go, python
+
+Gleb Stepanov
+Software engineer, Mirantis
+gstepanov@mirantis.com
+
+Thank you!
+
+* Short description
+
+- developed in google since 2009
+- 1.0 released in 2012
+- general purpose
+- compiled
+- static and strongly typed
+
+* Supported OS
+
+- linux
+- windows
+- darwin
+- solaris
+- freebsd
+- netbsd
+- openbsd
+- dragonfly
+- android
+- plan9
+
+* Supported architectures
+
+- arm
+- arm64
+- amd64
+- 386
+- ppc64
+- ppc64le
+- mips64
+- mips64le
+
+* One more slide
+
+Further Text, including invocations like:
+
+.image images/gopher.png 150 100
+.link http://golang.org link
+.caption _Gopher_ by [[http://www.reneefrench.com][Renée French]]
+
+* Slide with highlighted text
+
+// HL Highlited text goes here
+
+* Slide with code
+
+.code src/hello_world.go
+
+* Slide with more code and line numbers
+
+.code -numbers src/driver.go /START OMIT/,/END OMIT/
+
+* Q&A
+
+Questions?
