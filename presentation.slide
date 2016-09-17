@@ -15,7 +15,7 @@ Thank you!
 - compiled
 - static and strongly typed
 
-* Supported OS
+* Supported OS by echo $GOOS
 
 - linux
 - windows
@@ -28,7 +28,7 @@ Thank you!
 - android
 - plan9
 
-* Supported architectures
+* Supported architectures by echo $GOARCH
 
 - arm
 - arm64
@@ -41,7 +41,28 @@ Thank you!
 
 * Rule of thumb for Go
 
- Accept interfaces, return structs
+Accept interfaces, return structs
+
+* Slide with html table
+
+ <table style="width:100%">
+  <tr>
+    <th>Firstname</th>
+    <th>Lastname</th>
+    <th>Age</th>
+  </tr>
+  <tr>
+    <td>Jill</td>
+    <td>Smith</td>
+    <td>50</td>
+  </tr>
+  <tr>
+    <td>Eve</td>
+    <td>Jackson</td>
+    <td>94</td>
+  </tr>
+ </table>
+
 
 * One more slide
 
