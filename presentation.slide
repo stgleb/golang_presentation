@@ -209,6 +209,7 @@ Builtins for manipulating and measuring slices append, len, cap
 
 * Slice memory layout
 
+.image images/go-slices-usage-and-internals_slice-struct.png
 .image images/go-slices-usage-and-internals_slice-1.png
 .image images/go-slices-usage-and-internals_slice-2.png
 
