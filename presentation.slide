@@ -9,11 +9,8 @@ Thank you!
 
 * Short description
 
-- developed in google since 2009
-- 1.0 released in 2012
-- general purpose
-- compiled
-- static and strongly typed
+Go is a compiled, concurrent, garbage-collected, statically typed language developed at Google.
+.image images/gopher.png 300 200
 
 * Supported OS by echo $GOOS
 
@@ -39,50 +36,185 @@ Thank you!
 - mips64
 - mips64le
 
+* Golang has compact syntax
+
+Keywords:
+
+    break        default      func         interface    select
+    case         defer        go           map          struct
+    chan         else         goto         package      switch
+    const        fallthrough  if           range        type
+    continue     for          import       return       var
+
+* First program
+
+Golang also has unicode support
+.code src/hello_world.go
+
+All Go source is part of a package. Every file begins with a package statement.
+Programs start in package main.
+
+* Imports
+
+Package name declaration is always followed by imports
+
+    import "encoding/json"
+
+Imports can be directly made from git repositories
+
+    import "github.com/valyala/fasthttp"
+
+To import a package solely for its side-effects (initialization),
+use the blank identifier as explicit package name
+
+    _ "github.com/go-sql-driver/mysql"
+
+But, be careful, imports are always made from master, so when you directly
+import packages - your code can be broken by any changes.
+
+* Basic syntax is closer to Pascal than to C
+
+Variable declaration
+
+    var a int
+
+Short variable declaration
+
+    a := 2
+
+Function declaration
+
+    func foo() int {
+        ...
+    }
+
+* Naming
+
+Go takes an unusual approach to defining the visibility of an identifier.
+If the initial character is an upper case letter, the identifier is exported (public),
+otherwise it is not:
+
+    PublicIdentifier
+    privateIdentifier
+    _PrivateIdentifier
+
+Example
+
+    package fmt
+
+    func Println(a ...interface{}) (n int, err error) {
+        ...
+    }
+
+    func newPrinter() *pp {
+        ...
+    }
+
+* Types
+
+Implicit type conversions are not allowed for numeric types
+
+    var v1 int32 = 1
+    var v2 int64 = 2
+    v2 += v1 // WRONG!!!
+
+There is no type aliasing, each type
+
+.code src/type_aliasing.go
+
+* Functions
+
+In Go function is a first order object, it can be treated as a value
+
+    v := func(){
+        ...
+    }
+
+Closures also allowed
+
+    func getAdder(v int) func(int) int {
+        return func(arg int) int {
+            return v + arg
+        }
+    }
+
+* Function arguments
+
+This is possible to call function with variadic argument count
+using ... syntax, but they must have the same type.
+
+.code src/function_var_args.go
+
+Keyword arguments are not allowed :-(
+
+* Datatypes
+
+- Numerics(int, uint/int[8, 16, 32, 64], byte, float[32, 64], complex[64, 128], rune)
+- boolean
+- string
+- array
+- slice
+- map
+- struct type
+- channel
+- pointer type
+- func type
+
+* Mutable vs Immutable
+
+Only three datatypes in go are mutable
+
+- map
+- slice
+- channel
+
+They should be initialized with special builtin function make
+
+    make(chan int)
+    make([]int, 2, 3)
+    make(map[int]string)
+
+Even arrays are immutable
+
+* Pass by pointer vs Pass by value
+
+Go has pointers
+
+    i := 1
+    ptr := &i
+    *ptr = 3 // Now i == 3
+
+Everything is passed by value if pointer is not declared explicitly,
+except mutable types
+
+.code src/array_arg.go
+
+* Arrays and slices
+
+Array declaration
+
+    var a [256]byte // Size is always known in compile time
+    b := [...]string{"Penn", "Teller"} // Length is determined by compiler
+
+Slice declaration
+
+    var slice1 []byte             // empty slice
+    slice2 := make([]byte, 10)    // Slice with specified length
+    slice3 := make([]byte, 10, 20 // Slice with specified length and capacity
+
+Builtins for manipulating and measuring slices append, len, cap
+
+    slice := make([]byte, 5, 10) // len(slice) == 5, cap(slice) == 10
+    slice = append(slice, 42)    // len(slice) == 6, cap(slice) == 10
+
+* Slice memory layout
+
+.image images/go-slices-usage-and-internals_slice-1.png
+.image images/go-slices-usage-and-internals_slice-2.png
+
 * Rule of thumb for Go
 
 Accept interfaces, return structs
-
-* Slide with html table
-
- <table style="width:100%">
-  <tr>
-    <th>Firstname</th>
-    <th>Lastname</th>
-    <th>Age</th>
-  </tr>
-  <tr>
-    <td>Jill</td>
-    <td>Smith</td>
-    <td>50</td>
-  </tr>
-  <tr>
-    <td>Eve</td>
-    <td>Jackson</td>
-    <td>94</td>
-  </tr>
- </table>
-
-
-* One more slide
-
-Further Text, including invocations like:
-
-.image images/gopher.png 150 100
-.link http://golang.org link
-.caption _Gopher_ by [[http://www.reneefrench.com][Renée French]]
-
-* Slide with highlighted text
-
-// HL Highlited text goes here
-
-* Slide with code
-
-.code src/hello_world.go
-
-* Slide with more code and line numbers
-
-.code -numbers src/driver.go /START OMIT/,/END OMIT/
 
 * Q&A
 
