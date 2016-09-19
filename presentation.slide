@@ -68,6 +68,8 @@ Import may be declared with aliases
 
     import j "encoding/json"
 
+* More imports
+
 Or can be done with . analog of from x import *
 
     import . "encoding/json"
