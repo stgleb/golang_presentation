@@ -194,9 +194,9 @@ Keyword arguments are not allowed :-(
 - pointer type
 - func type
 
-* Mutable vs Immutable
+* Reference types vs Value types
 
-Only three datatypes in go are mutable
+Only three datatypes in go are reference types
 
 - map
 - slice
@@ -208,7 +208,8 @@ They should be initialized with special builtin function make
     make([]int, 2, 3)
     make(map[int]string)
 
-Even arrays are immutable
+In contrast to python arrays are passed by value, but content of an array
+can be changed, so it is not immutable.
 
 * Pass by pointer vs Pass by value
 
@@ -219,7 +220,7 @@ Go has pointers
     *ptr = 3 // Now i == 3
 
 Everything is passed by value if pointer is not declared explicitly,
-except mutable types
+except reference types (map, slice, channel)
 
 .code src/array_arg.go
 
@@ -256,8 +257,24 @@ ptr - is a pointer on actual memory
 len - count of elements
 cap - how many elements can be put inside without additional allocations
 
+* Many slices can be pointed to the same memory
+
 .image images/go-slices-usage-and-internals_slice-1.png
+
 .image images/go-slices-usage-and-internals_slice-2.png
+
+* Array slicing
+
+Many slices can be created over an existing array
+
+    slice := arr[:]
+    slice2 := arr[2:]    // copy since element with index 2
+    slice3 := arr[2:4:5] // 4 - position of len, 5 - position of capacity
+
+There is no way to reverse an array or get subset of elements like in Python
+
+    l[::-1]
+    l[1:10:2]
 
 * Rule of thumb for Go
 
