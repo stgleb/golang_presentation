@@ -38,13 +38,23 @@ Go is a compiled, concurrent, garbage-collected, statically typed language devel
 
 * Golang has compact syntax
 
-Keywords:
+Keywords Golang:
 
     break        default      func         interface    select
     case         defer        go           map          struct
     chan         else         goto         package      switch
     const        fallthrough  if           range        type
     continue     for          import       return       var
+
+Keywords Python:
+
+    and          del          from         not          while
+    as           elif         global       or           with
+    assert       else         if           pass         yield
+    break        except       import       print
+    class        exec         in           raise
+    continue     finally      is           return
+    def          for          lambda       try
 
 * First program
 
