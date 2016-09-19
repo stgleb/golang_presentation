@@ -155,6 +155,18 @@ using ... syntax, but they must have the same type.
 
 .code src/function_var_args.go
 
+* More variadic args
+
+Variadic args can not be expanded over ordinary arguments like
+
+    func foo(a, b, c int) {
+        ...
+    }
+
+    foo(args...) // WRONG!!!
+
+So this is only syntax sugar that allows not to declare slices in    argument
+
 Keyword arguments are not allowed :-(
 
 * Datatypes
