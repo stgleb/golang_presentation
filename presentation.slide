@@ -288,7 +288,7 @@ Initialization
 
     m := make(map[string]int)
 
-Or via map litteral
+Or via map literal
 
 	m := map[string]int{
 		"abc": 1,
@@ -306,6 +306,59 @@ Maps, Slices, Arrays, Channels and functions cannot be used as keys
 
 Note: iteration order it not determined not only between process run,
 but between two distinct iterations.
+
+* Interfaces, Structs, Methods
+
+* Structs
+
+Golang allows creating composite types - structs
+
+    type MyStruct struct{
+        IntField int
+        StrField  string
+    }
+
+Like in packages, identifier start with capital letter
+are "public" e.g can be used by code from other packages,
+otherwise - "private".
+
+* Struct methods
+
+We can define method bounded to specific type.
+
+.code src/method_over_int.go
+
+i acts as self in python and is called receiver.
+
+* Receivers
+
+Receiver can be declared as value or pointer
+
+    type MyStruct struct {
+        Field int
+    }
+
+    func (m MyStruct) ValueReceiver() {
+        m.Field = 3
+    }
+
+    func (m *MyStruct) PointerReceiver() {
+        m.Field = 4
+    }
+
+The main difference is that methods with value receiver cannot
+modify caller object.
+
+* Example
+
+	m := MyStruct{
+		Field: 1,
+	}
+
+	m.ValueReceiver()
+	fmt.Println(m.Field) // 1
+	m.PointerReceiver()
+	fmt.Println(m.Field) // 4
 
 * Concurrency
 
