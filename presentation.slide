@@ -64,6 +64,14 @@ Imports can be directly made from git repositories
 
     import "github.com/valyala/fasthttp"
 
+Import may be declared with aliases
+
+    import j "encoding/json"
+
+Or can be done with . analog of from x import *
+
+    import . "encoding/json"
+
 To import a package solely for its side-effects (initialization),
 use the blank identifier as explicit package name
 
