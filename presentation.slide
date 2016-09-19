@@ -66,7 +66,9 @@ Programs start in package main.
 
 * Imports
 
-Package name declaration is always followed by imports
+Imports must be placed right after package name declaration
+
+    package foo
 
     import "encoding/json"
 
