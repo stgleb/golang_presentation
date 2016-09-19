@@ -220,7 +220,7 @@ Go has pointers
     *ptr = 3 // Now i == 3
 
 Everything is passed by value if pointer is not declared explicitly,
-except reference types (map, slice, channel)
+except reference types (map, slice, channel, interfaces)
 
 .code src/array_arg.go
 
@@ -360,13 +360,79 @@ modify caller object.
 	m.PointerReceiver()
 	fmt.Println(m.Field) // 4
 
-* Concurrency
+* Interfaces
 
-.image images/concurrency.jpg 400 800
+Golang has interfaces - group of function signatures
+to be implemented.
+
+    type Reader interface{
+        Read([]byte) (int, error)
+    }
+
+Types are not directly marked with interfaces, instead
+as python does golang uses duck-typing to check whether concrete
+type implements interface or not.
+
+* Method sets
+
+All methods that have type T as a receiver constitute
+type T method set.
+
+All methods that have type *T or type T as a receiver constitute
+type *T method set.
+
+Internally methods set - is ordered list of method signatures.
+To implement an interface type should have all interface signatures
+in his method set.
+
+* Internal structure
+
+Internally interface variable consist of 2 words
+
+- Pointer to actual object
+- Pointer to interface method set
+
+.image images/interface.png
+
+* Proof
+
+	type iface interface{}
+	var v iface
+	println(unsafe.Sizeof(v)) // 8 or 16 depend on system
+
+So you should never declare functions such as
+
+    func foo(iface &MyInterface)
+
+As far as interface{} type has empty method set, it can
+receive any values and act as an universal pointer.
+
+* Type switch
+
+Golang has unusual construct as type switch
+
+    switch t := t.(type) {
+    default:
+        fmt.Printf("unexpected type %T\n", t)
+    case bool:
+        fmt.Printf("boolean %t\n", t)
+    case int:
+        fmt.Printf("integer %d\n", t)
+    case *bool:
+        fmt.Printf("pointer to boolean %t\n", *t)
+    case *int:
+        fmt.Printf("pointer to integer %d\n", *t)
+    }
 
 * Rule of thumb for Go
 
 Accept interfaces, return structs
+
+* Error handling
+
+* Defer, Panic, Recover
+
+* Concurrency
 
 * Q&A
 
