@@ -307,6 +307,10 @@ Maps, Slices, Arrays, Channels and functions cannot be used as keys
 Note: iteration order it not determined not only between process run,
 but between two distinct iterations.
 
+* Concurrency
+
+.image images/concurrency.jpg 400 800
+
 * Rule of thumb for Go
 
 Accept interfaces, return structs
