@@ -64,6 +64,22 @@ Golang also has unicode support
 All Go source is part of a package. Every file begins with a package statement.
 Programs start in package main.
 
+* Basic syntax is closer to Pascal than to C
+
+Variable declaration
+
+    var a int
+
+Short variable declaration
+
+    a := 2
+
+Function declaration
+
+    func foo() int {
+        ...
+    }
+
 * Imports
 
 Imports must be placed right after package name declaration
@@ -93,22 +109,6 @@ use the blank identifier as explicit package name
 
 But, be careful, imports are always made from master, so when you directly
 import packages - your code can be broken by any changes.
-
-* Basic syntax is closer to Pascal than to C
-
-Variable declaration
-
-    var a int
-
-Short variable declaration
-
-    a := 2
-
-Function declaration
-
-    func foo() int {
-        ...
-    }
 
 * Naming
 
