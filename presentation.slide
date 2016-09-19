@@ -276,6 +276,37 @@ There is no way to reverse an array or get subset of elements like in Python
     l[::-1]
     l[1:10:2]
 
+* Maps
+
+Maps are made by hash map
+
+Declaration
+
+    var m map[string]int
+
+Initialization
+
+    m := make(map[string]int)
+
+Or via map litteral
+
+	m := map[string]int{
+		"abc": 1,
+		"edf": 2,
+		"cnv":  3,
+	}
+
+Maps, Slices, Arrays, Channels and functions cannot be used as keys
+
+* Iteration over map
+
+    for key, value := range m {
+
+    }
+
+Note: iteration order it not determined not only between process run,
+but between two distinct iterations.
+
 * Rule of thumb for Go
 
 Accept interfaces, return structs
