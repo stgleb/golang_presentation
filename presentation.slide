@@ -234,7 +234,7 @@ Slice declaration
 
     var slice1 []byte             // empty slice
     slice2 := make([]byte, 10)    // Slice with specified length
-    slice3 := make([]byte, 10, 20 // Slice with specified length and capacity
+    slice3 := make([]byte, 10, 20) // Slice with specified length and capacity
 
 Builtins for manipulating and measuring slices append, len, cap
 
@@ -243,7 +243,19 @@ Builtins for manipulating and measuring slices append, len, cap
 
 * Slice memory layout
 
+Slice variable is a value, composing of three words
+
 .image images/go-slices-usage-and-internals_slice-struct.png
+
+Proof:
+
+	slice := []int{1, 2, 3, 5, 6}
+	println(unsafe.Sizeof(slice)) // 24 on 64-bit machines
+
+ptr - is a pointer on actual memory
+len - count of elements
+cap - how many elements can be put inside without additional allocations
+
 .image images/go-slices-usage-and-internals_slice-1.png
 .image images/go-slices-usage-and-internals_slice-2.png
 
