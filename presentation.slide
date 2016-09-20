@@ -411,7 +411,7 @@ receive any values and act as an universal pointer.
 
 Golang has unusual construct as type switch
 
-    switch t := t.(type) {
+    switch t := v.(type) {
     default:
         fmt.Printf("unexpected type %T\n", t)
     case bool:
@@ -429,6 +429,54 @@ Golang has unusual construct as type switch
 Accept interfaces, return structs
 
 * Error handling
+
+Golang has no special control flow for handling exception.
+Errors are just value returned  from function.
+Maybe the most simple interface from standard library package builtin.
+
+    type error interface {
+        Error() string
+    }
+
+Such error handling has advantage of performance (Google doest like exceptions)
+like in plain old C, but code full of error checks becomes messy, more over
+error does not carry any context.
+
+* But there is a rescue
+
+    github.com/pkg/errors
+
+Package allows to make smart errors.
+New error should be produced by constructor
+
+    func New(text string) error
+
+On each stage error should be wrapped before sending further
+
+    func Wrap(err error, message string) error
+
+* Example
+
+    func foo() error {
+        err := errors.New("foo")
+        return err
+    }
+
+    func bar() error {
+        err := foo()
+        return errors.Wrap(err, "bar")
+    }
+
+Trace:
+
+    main.baz
+        /home/stgleb/workspace/golang_presentation/src/errors_package.go:20
+    main.main
+        /home/stgleb/workspace/golang_presentation/src/errors_package.go:28
+    runtime.main
+        /usr/local/go/src/runtime/proc.go:183
+    runtime.goexit
+        /usr/local/go/src/runtime/asm_amd64.s:2086
 
 * Defer, Panic, Recover
 
