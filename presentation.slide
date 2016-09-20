@@ -480,11 +480,47 @@ Trace:
 
 * Defer, Panic, Recover
 
-* Remember i told that Go doesn't have any special control flow for errors?
+* Defer
 
-*
+A defer statement pushes a function call onto a list. The list of
+saved calls is executed after the surrounding function returns.
+Defer is commonly used to simplify functions that perform various clean-up actions.
+
+
+    func Foo(fileName string) {
+        fd, err := os.Open(fileName)
+        defer fd.Close()
+        ...
+    }
+
+Note: defer is made by closure, so be careful when using mutable values inside of defer.
+
+
+* Remember I told that Go doesn't have any special control flow for errors?
+
+* Not exactly
 
 .image images/sully4.jpg 500 900
+
+* Panic&Recover
+
+Panic is a built-in function that stops the ordinary flow of control and begins panicking.
+When the function F calls panic, execution of F stops, any deferred
+functions in F are executed normally, and then F returns to its caller.
+
+Recover is a built-in function that regains control of a panicking goroutine.
+Recover is only useful inside deferred functions.
+
+    defer func() {
+        if r := recover(); r != nil {
+            ...
+        }
+    }
+
+Conclusion:
+
+- Don't be afraid to use defer, use it right after resource acquisition for performance.
+- Don't use panic/recover if you can it with errors (almost always).
 
 * Concurrency
 
