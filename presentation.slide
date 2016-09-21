@@ -525,6 +525,165 @@ Conclusion:
 
 * Concurrency
 
+* Design and basics
+
+Wide concurrency support seems to be main feature of Golang
+Golang concurrency model may seems new, but basis was created in
+1978 by Tony Hoare.
+
+Golang brings two new things to implement concurrency - goroutines and channels.
+Goroutine - a piece of code executing concurrently.
+Channel - an object used for communicating between goroutines.
+
+Example spawning goroutine
+
+    go func(){
+        // your code goes here
+    }()
+
+* Channels
+
+Channel is reference type and must be created using make
+
+    ch := make(chan int)
+
+Write to channel
+
+    ch <- 1
+
+Read from channel
+
+    value := <- ch
+
+Above channel called blocked. Goroutine that sends data to channel will be blocked
+until other goroutine receive data from there and visa versa.
+
+* Buffered channel
+
+Chanel behaves as blocking or blocking buffered queue.
+
+    ch := make(chan int, 2) // Channel with buffer size 3
+    ch <- 0
+    ch <- 1
+    ch <- 3 // Blocks here
+
+Builtin functions like len and cap applicable for channels
+
+    cap(ch)   - returns buffer size
+    len(ch)   - returns actual elements in buffer
+    close(ch) - closes channel like file descriptor
+
+We can also iterate over channel like any other composite object
+
+    for value := range ch {
+        fmt.Println(value)
+    }
+
+* Channel axioms
+
+As far as channel - reference type, when it is declared but not initialized
+
+    var ch chan int
+
+It is called nil channel.
+
+- Send to a nil channel blocks forever
+- Receive from a nil channel blocks forever
+- Send to a closed channel panics
+- Receive from a closed channel returns the zero value immediately
+
+Zero value - 0, "", nil etc.
+
+* Channel internals
+
+Internally channel is simple blocking queue, no magic. Some fields are omitted.
+
+    type hchan struct {
+        qcount   uint           // total data in the queue
+        dataqsiz uint           // size of the circular queue
+        buf      unsafe.Pointer // points to an array of dataqsiz elements
+        elemsize uint16         // You cant pass really big objects by value
+        recvq    waitq          // list of recv waiters
+        sendq    waitq          // list of send waiters
+        lock mutex              // synchronizes access to channel
+    }
+
+Note: channel is a first-class value, it is possible to have channel of channels
+
+    ch := make(chan int)
+    chanOfChan := make(chan chan int)
+    chanOfChan <- ch
+
+* Channel misuse
+
+As far as Go runtime uses lock inside mutex - don't use channel to synchronize
+access to shared memory, use sync.Mutex instead. And remember Golang mantra:
+
+"Do not communicate by sharing memory; instead, share memory by communicating."
+
+* More about goroutines
+
+Goroutine is some kind of lightweight thread, that is multiplexed over OS threads.
+It hides some problems of thread management.
+
+* Concurrency models
+
+- 1:1 User thread is OS thread(Posix threads)
+- N:1 N user threads run on OS thread(green threads)
+- N:M N user threads run on M os threads(Golang)
+
+.image images/goroutines.jpg
+
+- M - OS thread
+- P - Context of execution
+- G - Goroutine
+
+* Scheduling
+
+Context of execution has queue of goroutines to be executed.
+
+.image images/goroutine2.jpg 500 500
+
+* Blocking
+
+Main purpose of context layer of abstraction between threads and goroutines
+it is interoperability between threads. When running goroutine makes syscall and block
+entire thread, new thread is spawn and context moved to new thread.
+
+.image images/syscall.jpg
+
+* Work stealing
+
+Second advantage of context - work stealing. When context goes out of work,
+it can steal goroutines from other contexts.
+
+.image images/steal.jpg
+
+* Notes on goroutines
+
+- runtime.GOMAXPROCS - doesnt bound count of threads, this is count of contextsor active threads.
+- debug.SetMaxThreads - returns old value and set the new one, by default 10000.
+- Since GO 1.5 GOMAXPROCS is equal to number of CPU cores, you don't need to set it manually.
+- If you need thread exclusively use, LockOSThread wires the calling goroutine
+  to its current operating system thread.
+
+    runtime.LockOSThread()
+
+* Follow-up
+
+- In current implementation of scheduler preemption can be made only during function call.
+So don't do tight loops like this, it will own thread forever.
+
+    go func(){
+        var v int
+
+        for {
+            v += 1
+        }
+    }()
+
+- Goroutine has contiguous stack of 2 Kb, scheduling of goroutines is cheap, so don't be afraid to spawn hundreds of thousands of gorutines.
+
 * Q&A
 
 Questions?
