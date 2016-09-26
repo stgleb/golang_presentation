@@ -594,6 +594,33 @@ It is called nil channel.
 
 Zero value - 0, "", nil etc.
 
+* Stop goroutines by closing channel
+
+    func main() {
+        jobs := make(chan int, 5)
+        done := make(chan bool)
+
+        go func() {
+            for {
+                j, more := <-jobs
+                if more {
+                    fmt.Println("received job", j)
+                } else {
+                    fmt.Println("received all jobs")
+                    return
+                }
+            }
+        }()
+        
+        for j := 1; j <= 3; j++ {
+            jobs <- j
+            fmt.Println("sent job", j)
+        }
+
+        time.Sleep(time.Second * 10)
+        close(jobs)     // Stop all goroutines
+    }
+
 * Channel internals
 
 Internally channel is simple blocking queue, no magic. Some fields are omitted.
