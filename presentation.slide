@@ -596,11 +596,7 @@ Zero value - 0, "", nil etc.
 
 * Stop goroutines by closing channel
 
-    func main() {
-        jobs := make(chan int, 5)
-        done := make(chan bool)
-
-        go func() {
+    func worker(jobs chan int) {
             for {
                 j, more := <-jobs
                 if more {
@@ -610,9 +606,16 @@ Zero value - 0, "", nil etc.
                     return
                 }
             }
-        }()
-        
+    }
+
+* Main
+
+    func main() {
+        jobs := make(chan int)
+        done := make(chan bool)
+
         for j := 1; j <= 3; j++ {
+            go worker(jobs)
             jobs <- j
             fmt.Println("sent job", j)
         }
