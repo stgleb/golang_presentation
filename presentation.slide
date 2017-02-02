@@ -2,8 +2,8 @@ Golang from python point of view
 Tags: go, python
 
 Gleb Stepanov
-Software engineer, Mirantis
-gstepanov@mirantis.com
+Software engineer, Admanic
+glebstepanov1992@gmail.com
 
 Thank you!
 
@@ -140,7 +140,7 @@ Implicit type conversions are not allowed for numeric types
     var v2 int64 = 2
     v2 += v1 // WRONG!!!
 
-There is no type aliasing, each type
+There is no type aliasing, each type creates separate one
 
 .code src/type_aliasing.go
 
