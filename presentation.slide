@@ -306,6 +306,7 @@ Maps, Slices, Arrays, Channels and functions cannot be used as keys
 
 Note: iteration order it not determined not only between process run,
 but between two distinct iterations.
+.link https://play.golang.org/p/LILMXTTEMn Example
 
 * Interfaces, Structs, Methods
 
@@ -360,6 +361,8 @@ modify caller object.
 	fmt.Println(m.Field) // 1
 	m.PointerReceiver()
 	fmt.Println(m.Field) // 4
+
+.link https://play.golang.org/p/zHINE9lpk0 Example
 
 * Interfaces
 
