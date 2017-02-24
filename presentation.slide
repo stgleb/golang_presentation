@@ -276,6 +276,26 @@ There is no way to reverse an array or get subset of elements like in Python
     l[::-1]
     l[1:10:2]
 
+* Iteration over array/slice
+
+Use index
+
+    for i := range a {
+    }
+
+Index and value
+
+    for i, v := range a {
+    }
+
+Index and value addr
+
+	for i, v := range &a {
+	}
+
+.link https://play.golang.org/p/4b181zkB1O Example
+
+
 * Maps
 
 Maps are made by hash map
