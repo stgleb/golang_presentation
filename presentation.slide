@@ -7,7 +7,7 @@ Software engineer
 
 * Short description
 
-Go is a compiled, concurrent, garbage-collected, statically typed language developed at Google.
+Go is a compiled, statically typed, concurrent, garbage-collected language developed at Google.
 .image images/gopher.png 300 200
 
 * Supported OS by echo $GOOS
@@ -131,17 +131,52 @@ Example
         ...
     }
 
-* Types
+* Datatypes
 
-Implicit type conversions are not allowed for numeric types
+- Numerics(int, uint/int[8, 16, 32, 64], byte, float[32, 64], complex[64, 128], rune)
+- boolean
+- string
+- array
+- slice
+- map
+- struct type
+- channel
+- pointer type
+- func type
+
+* What if standard types are not enough for you?
+
+Just create your own one
+
+Example
+
+    type Foo int
+
+    var f Foo = 1
+
+* Type conversion and compatibility
+
+Go requires all type conversions to be explicit
 
     var v1 int32 = 1
     var v2 int64 = 2
     v2 += v1 // WRONG!!!
 
-There is no type aliasing, each type creates separate one
+Type declaration produces new type separate from underlying type with own method set.
 
-.code src/type_aliasing.go
+.code src/type_assignment_wrong.go
+
+* Type aliasing
+
+Since go1.9 it is allowed to create alias T2 that is equal to type T1.
+
+    type Alias = Original
+
+    Use case
+
+    oldPkg.MyType -> newPkg.MyType
+
+Both types are equal now
 
 * Functions
 
@@ -179,19 +214,6 @@ Variadic args can not be expanded over ordinary arguments like
 So this is only syntax sugar that allows not to declare slices in    argument
 
 Keyword arguments are not allowed :-(
-
-* Datatypes
-
-- Numerics(int, uint/int[8, 16, 32, 64], byte, float[32, 64], complex[64, 128], rune)
-- boolean
-- string
-- array
-- slice
-- map
-- struct type
-- channel
-- pointer type
-- func type
 
 * Reference types vs Value types
 
@@ -325,7 +347,23 @@ Maps, Slices, Arrays, Channels and functions cannot be used as keys
 
 Note: iteration order it not determined not only between process run,
 but between two distinct iterations.
-.link https://play.golang.org/p/LILMXTTEMn Example
+.link https://play.golang.org/p/j10RA3YhoB0 Example
+
+* Common pitfall
+
+When iterate over something(slice, map etc) each element gets copied
+to temporary variable.
+
+    s := []int{1, 2, 3}
+    for _, v := range s {
+        v += 1
+    }
+    fmt.Println(s) // [1, 2, 3]
+
+    for i, _ := range s {
+            s[i] += 1
+    }
+    fmt.Println(s) // [2, 3, 4]
 
 * Interfaces, Structs, Methods
 
