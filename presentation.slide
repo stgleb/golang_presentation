@@ -2,10 +2,8 @@ Golang from python point of view
 Tags: go, python
 
 Gleb Stepanov
-Software engineer, Admanic
-glebstepanov1992@gmail.com
+Software engineer
 
-Thank you!
 
 * Short description
 
@@ -35,6 +33,7 @@ Go is a compiled, concurrent, garbage-collected, statically typed language devel
 - ppc64le
 - mips64
 - mips64le
+- sx390
 
 * Golang has compact syntax
 
@@ -522,7 +521,7 @@ Note: defer is made by closure, so be careful when using mutable values inside o
 
 * Remember I told that Go doesn't have any special control flow for errors?
 
-* Not exactly
+* .
 
 .image images/sully4.jpg 500 900
 
@@ -700,8 +699,9 @@ Context of execution has queue of goroutines to be executed.
 * Blocking
 
 Main purpose of context layer of abstraction between threads and goroutines
-it is interoperability between threads. When running goroutine makes syscall and block
-entire thread, new thread is spawn and context moved to new thread.
+it is interoperability between threads. When running goroutine makes syscall or
+CGO call and block entire thread, new thread is spawn to satisfy condition
+that GOMAXPROCS equal to running thread count and context moved to new thread.
 
 .image images/syscall.jpg
 
@@ -714,7 +714,7 @@ it can steal goroutines from other contexts.
 
 * Notes on goroutines
 
-- runtime.GOMAXPROCS - doesnt bound count of threads, this is count of contextsor active threads.
+- runtime.GOMAXPROCS - doesn't bound count of threads, this is count of contexts(running OS threads).
 - debug.SetMaxThreads - returns old value and set the new one, by default 10000.
 - Since GO 1.5 GOMAXPROCS is equal to number of CPU cores, you don't need to set it manually.
 - If you need thread exclusively use, LockOSThread wires the calling goroutine
