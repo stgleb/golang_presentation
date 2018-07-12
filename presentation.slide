@@ -1,4 +1,4 @@
-Golang from python point of view
+Overview of Go
 Tags: go, python
 
 Gleb Stepanov
@@ -365,15 +365,19 @@ to temporary variable.
     }
     fmt.Println(s) // [2, 3, 4]
 
-* Interfaces, Structs, Methods
-
 * Structs
+
+* Syntax
 
 Golang allows creating composite types - structs
 
     type MyStruct struct{
-        IntField int
+        IntField  int
         StrField  string
+
+        AnyField  AnyType
+
+        unexportableField SomeType
     }
 
 Like in packages, identifier start with capital letter
@@ -423,6 +427,8 @@ modify caller object.
 
 * Interfaces
 
+* Syntax
+
 Golang has interfaces - group of function signatures
 to be implemented.
 
@@ -431,10 +437,10 @@ to be implemented.
     }
 
 Types are not directly marked with interfaces, instead
-as python does golang uses duck-typing to check whether concrete
-type implements interface or not.
+golang uses duck-typing to check whether particular
+type implements specified interface methods or not.
 
-* Method sets
+* Method set concept
 
 All methods that have type T as a receiver constitute
 type T method set.
@@ -446,7 +452,18 @@ Internally methods set - is ordered list of method signatures.
 To implement an interface type should have all interface signatures
 in his method set.
 
-* Internal structure
+* Embedding interfaces
+
+The same as for structs interface can be embedded to another one
+
+    package io
+
+    type ReadWriter interface {
+    	Reader
+    	Writer
+    }
+
+* Mechanics
 
 Internally interface variable consist of 2 words
 
@@ -468,26 +485,11 @@ So you should never declare functions such as
 As far as interface{} type has empty method set, it can
 receive any values and act as an universal pointer.
 
-* Type switch
+* Gotchas
 
-Golang has unusual construct as type switch
-
-    switch t := v.(type) {
-    default:
-        fmt.Printf("unexpected type %T\n", t)
-    case bool:
-        fmt.Printf("boolean %t\n", t)
-    case int:
-        fmt.Printf("integer %d\n", t)
-    case *bool:
-        fmt.Printf("pointer to boolean %t\n", *t)
-    case *int:
-        fmt.Printf("pointer to integer %d\n", *t)
-    }
-
-* Rule of thumb for Go
-
-Accept interfaces, return structs
+ - Accept interface, return struct
+ - Prefer Interface embedding over large interfaces or redeclaration
+ - Declare interface in package that use it unless you want user to implement it by it own
 
 * Error handling
 
