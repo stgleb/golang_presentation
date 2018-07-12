@@ -561,7 +561,7 @@ Note: defer is made by closure, so be careful when using mutable values inside o
 
 * Remember I told that Go doesn't have any special control flow for errors?
 
-* .
+*  
 
 .image images/sully4.jpg 500 900
 
