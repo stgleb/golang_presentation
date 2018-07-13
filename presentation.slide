@@ -396,7 +396,7 @@ We can define method bounded to specific type.
 .code src/method_over_int.go
 
 i acts as self in python and is called receiver.
-Note: All methods must be declared inside where type is declared.
+Note: All methods must be declared inside package where type is declared.
 
 * Receivers
 
